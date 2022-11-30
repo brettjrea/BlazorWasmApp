@@ -2,11 +2,12 @@ name: DeployToGitHubPages
 env:
   PUBLISH_DIR: bin/Release/net6.0/publish/wwwroot
 
-# Controls when the action will run
+# Controls when the action will run (Push)
 on:
   push:
     branches: [ main ]
 
+# Choose OS to build on.
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,9 +24,15 @@ jobs:
     - name: Install .NET WASM Build Tools
       run: dotnet workload install wasm-tools
 
+    # Install dotnet Blazored.LocalStorage
+    - name: Install Blazored.LocalStorage
+      run: dotnet add package Blazored.LocalStorage
+
+    # .Net Publish
     - name: Publish app
       run: dotnet publish -c Release
 
+    # .Rewrite href Base
     - name: Rewrite base href
       uses: SteveSandersonMS/ghaction-rewrite-base-href@v1
       with:
@@ -36,6 +43,7 @@ jobs:
     - name: Add .nojekyll file
       run: touch ${{ env.PUBLISH_DIR }}/.nojekyll
 
+    # Trigger Page build.
     - name: GitHub Pages
       if: success()
       uses: crazy-max/ghaction-github-pages@v1.5.1
