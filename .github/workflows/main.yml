@@ -28,6 +28,10 @@ jobs:
     - name: Install Blazored.LocalStorage
       run: dotnet add package Blazored.LocalStorage
 
+    # Install dotnet System.Net.Http.Json
+    - name: Install System.Net.Http.Json
+      run: dotnet add package System.Net.Http.Json --version 7.0.0
+
     # .Net Publish
     - name: Publish app
       run: dotnet publish -c Release
