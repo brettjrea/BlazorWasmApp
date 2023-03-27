@@ -31,6 +31,10 @@ jobs:
     # Install dotnet System.Net.Http.Json
     - name: Install System.Net.Http.Json
       run: dotnet add package System.Net.Http.Json --version 7.0.0
+    
+    # Install OpenAI.NET
+    - name: Install OpenAI.NET
+      run: dotnet add package OpenAI.NET
 
     # .Net Publish
     - name: Publish app
